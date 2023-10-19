@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JacobDeKeizer\DpdShipper\Endpoints;
 
+use DateTime;
 use JacobDeKeizer\DpdShipper\Entities\Login\AuthData;
 use JacobDeKeizer\DpdShipper\Entities\Login\LoginRequest;
 use JacobDeKeizer\DpdShipper\Entities\Login\LoginResponse;
@@ -31,6 +32,29 @@ class LoginEndpoint extends AbstractEndpoint
         }
 
         return $response->return;
+    }
+
+    /**
+     * @throws DpdShipperException
+     * @throws AuthenticationFaultException
+     */
+    public function session(): AuthData
+    {
+        $accountConfiguration = $this->client->getAccountConfiguration();
+
+        $authData = $this->client->getAuthTokenStore()->retrieve();
+
+        if ($authData === null || $authData->authTokenExpires < new DateTime()) {
+            $authData = $this->client->login()->getAuthData(new LoginRequest(
+                delisId: $accountConfiguration->username,
+                password: $accountConfiguration->password,
+                messageLanguage: $this->client->getLocale(),
+            ));
+
+            $this->client->getAuthTokenStore()->store($authData);
+        }
+
+        return $authData;
     }
 
     protected function getWsdlPath(): string

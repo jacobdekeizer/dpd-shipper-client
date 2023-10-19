@@ -67,7 +67,7 @@ $result = $client->shipment()->storeOrders(new \JacobDeKeizer\DpdShipper\Entitie
         [
             new \JacobDeKeizer\DpdShipper\Entities\Shipment\Order(
                 generalShipmentData: new \JacobDeKeizer\DpdShipper\Entities\Shipment\GeneralShipmentData(
-                    sendingDepot: $client->getAuthTokenStore()->retrieve()->depot,
+                    sendingDepot: $this->client->login()->session()->depot,
                     product: \JacobDeKeizer\DpdShipper\Entities\Shipment\ShipmentProduct::CL,
                     sender: new \JacobDeKeizer\DpdShipper\Entities\Shipment\Address(
                         name1: 'Ikea',

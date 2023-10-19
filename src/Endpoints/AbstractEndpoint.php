@@ -31,7 +31,7 @@ abstract class AbstractEndpoint
 {
     private Serializer $serializer;
 
-    public function __construct(private readonly Client $client)
+    public function __construct(protected readonly Client $client)
     {
         $objectNormalizer = new ObjectNormalizer(
             propertyTypeExtractor: new PhpDocExtractor(),
@@ -131,19 +131,8 @@ abstract class AbstractEndpoint
     private function getAuthenticationHeader(): SoapHeader
     {
         $urlConfiguration = $this->client->getUrlConfiguration();
-        $accountConfiguration = $this->client->getAccountConfiguration();
 
-        $authData = $this->client->getAuthTokenStore()->retrieve();
-
-        if ($authData === null || $authData->authTokenExpires < new DateTime()) {
-            $authData = $this->client->login()->getAuthData(new LoginRequest(
-                delisId: $accountConfiguration->username,
-                password: $accountConfiguration->password,
-                messageLanguage: $this->client->getLocale(),
-            ));
-
-            $this->client->getAuthTokenStore()->store($authData);
-        }
+        $authData = $this->client->login()->session();
 
         return new SoapHeader(
             namespace: $urlConfiguration->authenticationUrl,
