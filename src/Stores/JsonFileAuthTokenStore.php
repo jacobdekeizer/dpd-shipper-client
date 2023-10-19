@@ -43,6 +43,10 @@ class JsonFileAuthTokenStore implements AuthTokenStore
 
     public function retrieve(): ?AuthData
     {
+        if (!file_exists($this->path)) {
+            return null;
+        }
+
         $contents = file_get_contents($this->path, true);
 
         if ($contents === false) {
