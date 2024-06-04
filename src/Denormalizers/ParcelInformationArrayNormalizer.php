@@ -29,6 +29,9 @@ class ParcelInformationArrayNormalizer implements DenormalizerInterface
         );
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return $type === ParcelInformation::class . '[]';
