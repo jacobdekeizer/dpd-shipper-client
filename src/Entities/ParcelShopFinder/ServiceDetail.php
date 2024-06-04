@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JacobDeKeizer\DpdShipper\Entities\ParcelShopFinder\Data;
+namespace JacobDeKeizer\DpdShipper\Entities\ParcelShopFinder;
 
 class ServiceDetail
 {

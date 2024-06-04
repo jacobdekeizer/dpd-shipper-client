@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace JacobDeKeizer\DpdShipper\Entities\ParcelShopFinder;
 
-use JacobDeKeizer\DpdShipper\Entities\ParcelShopFinder\Data\Services;
-
 class FindParcelShopsRequest
 {
     public function __construct(
