@@ -17,7 +17,7 @@ class ParcelInformationArrayNormalizer implements DenormalizerInterface
     /**
      * @param array<string, mixed> $context
      */
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
         // The parcel information sometimes returns an object and sometimes an array of objects.
         // We convert it to always an array here
@@ -29,8 +29,13 @@ class ParcelInformationArrayNormalizer implements DenormalizerInterface
         );
     }
 
-    public function supportsDenormalization(mixed $data, string $type, string $format = null)
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return $type === ParcelInformation::class . '[]';
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return ['object' => true];
     }
 }

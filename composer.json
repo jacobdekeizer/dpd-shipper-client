@@ -18,8 +18,8 @@
     "require": {
         "php": ">8.2",
         "ext-soap": "*",
-        "symfony/serializer": "^6.3",
-        "symfony/property-access": "^6.3",
+        "symfony/serializer": "^7.0",
+        "symfony/property-access": "^7.0",
         "phpdocumentor/reflection-docblock": "^5.3"
     },
     "require-dev": {
